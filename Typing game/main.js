@@ -41,6 +41,18 @@ let score = 0;
 //init time
 let time = 10;
 
+// set difficulty
+let difficulty =
+  localStorage.getItem("difficulty") !== null
+    ? localStorage.getItem("difficulty")
+    : "medium";
+
+// st difficulty select value
+difficultySelect.value =
+  localStorage.getItem("difficulty") !== null
+    ? localStorage.getItem("difficulty")
+    : "medium";
+
 // focus on input on start
 text.focus();
 
@@ -78,7 +90,14 @@ function updateTime() {
 }
 
 //Gamr over
-function gameOver() {}
+function gameOver() {
+  endgameEl.innerHTML = `
+    <h1>Time ran out</h1>
+    <p>Your final score is ${score}</p>
+    <button onclick="location.reload()">Reload</button>
+  `;
+  endgameEl.style.display = "flex";
+}
 
 addWordToDOM();
 
@@ -90,5 +109,24 @@ text.addEventListener("input", (e) => {
     addWordToDOM();
     updateScore();
     e.target.value = "";
+
+    if (difficulty === "hard") {
+      time += 2;
+    } else if (difficulty === "medium") {
+      time += 3;
+    } else {
+      time += 5;
+    }
+
+    updateTime();
   }
+});
+
+// settings button clik
+settingsBtn.addEventListener("click", () => settings.classList.toggle("hide"));
+
+//settings select
+settingsForm.addEventListener("change", (e) => {
+  difficulty = e.target.value;
+  localStorage.setItem("difficulty", difficulty);
 });
