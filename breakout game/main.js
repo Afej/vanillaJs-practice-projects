@@ -147,10 +147,10 @@ function moveBall() {
   });
 
   // Hit bottom wall - Lose
-  // if (ball.y + ball.size > canvas.height) {
-  //   showAllBricks();
-  //   score = 0;
-  // }
+  if (ball.y + ball.size > canvas.height) {
+    showAllBricks();
+    score = 0;
+  }
 }
 
 // Increase score
